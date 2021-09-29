@@ -6,7 +6,7 @@ const bot = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 const axios = require("axios");
 
 //imports
-const { PREFIX, BOT_URL, GITHUB_REPO } = require("./library/constants")
+const { PREFIX, BOT_URL, GITHUB_REPO, BULLY_PHRASES } = require("./library/constants")
 
 //function to keep the server alive when the repl.it tab closed
 const { keepServerAlive } = require("./server");
@@ -130,31 +130,35 @@ bot.on("messageCreate", (msg) => {
 				}
 
 				if (msg.content.toLowerCase().includes(`${PREFIX}troll`)){
-					let personToTroll = msg.mentions.users.first();
-					let personWhoSentTheCommand = msg.author
+					if (msg.member.roles.cache.has("892752234939547659") || msg.author.id === "790196001008910337"){
+						let personToTroll = msg.mentions.users.first();
+						let personWhoSentTheCommand = msg.author
 
-					if (!personToTroll){
-						msg.reply("Please mention someone to troll! :)")
+						if (personToTroll === undefined){
+							msg.reply("Please mention someone to troll! :)")
+						}else{
+							msg.reply(`Now, I will troll ${personToTroll} in every common server until ${personWhoSentTheCommand} writes \`$bullystop\`! And yes, ${personToTroll} please blame ${personWhoSentTheCommand} for your bully!`);
+						}
+
+						let trolling = true;
+
+
+						bot.on("messageCreate", (message) => {
+							if (message.author === personToTroll && trolling === true){
+								const randomNum = random(1, BULLY_PHRASES.length);
+								message.reply(BULLY_PHRASES[randomNum]);
+							}
+
+							if (message.author === personWhoSentTheCommand && message.content === `${PREFIX}bullystop`){
+								message.reply(`I won't troll ${personToTroll} anymore! :)`)
+								trolling = false;
+								personToTroll = undefined;
+								personWhoSentTheCommand = undefined;
+							}
+						})
 					}else{
-						msg.reply(`Now, I will troll ${personToTroll} in every common server until ${personWhoSentTheCommand} writes \`$bullystop\`! And yes, ${personToTroll} please blame ${personWhoSentTheCommand} for your bully!`);
+						msg.reply("You can't troll anyone sorry. :(")
 					}
-
-					let trolling = true;
-
-
-					bot.on("messageCreate", (message) => {
-						if (message.author === personToTroll && trolling === true){
-							message.reply("Shit yourself!")
-						}
-
-						if (message.author === personWhoSentTheCommand && message.content === `${PREFIX}bullystop`){
-							message.reply(`I won't troll ${personToTroll} anymore! :)`)
-							trolling = false;
-							personToTroll = undefined;
-							personWhoSentTheCommand = undefined;
-						}
-					})
-
 					
 				}
 		}

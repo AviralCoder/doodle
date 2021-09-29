@@ -36,5 +36,8 @@ const COMMANDS: any[] = [
 ];
 
 
-module.exports = { PREFIX, BOT_URL, COMMANDS, GITHUB_REPO }
+const BULLY_PHRASES: any[] = ["You suck!", "Why are you still in the server?", "Oh, hi cry baby!", "Your face makes onions cry", "Were you born on a highway? Because most accidents happen there only.", "Stop messaging, idiot."]
+
+
+module.exports = { PREFIX, BOT_URL, COMMANDS, GITHUB_REPO, BULLY_PHRASES }
 
