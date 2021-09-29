@@ -5,8 +5,11 @@ const bot = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 //axios
 const axios = require("axios");
 
+//message embed
+const { MessageEmbed } = require("discord.js")
+
 //imports
-const { PREFIX, BOT_URL, GITHUB_REPO, BULLY_PHRASES } = require("./library/constants")
+const { PREFIX, BOT_URL, GITHUB_REPO, BULLY_PHRASES, feedbackGood, feedbackBad } = require("./library/constants")
 
 //function to keep the server alive when the repl.it tab closed
 const { keepServerAlive } = require("./server");
@@ -29,15 +32,12 @@ bot.on("ready", () => {
 const fetch_placeholders = {
 	meme: generatePlaceholder("meme"),
 	cat: generatePlaceholder("cat picture"),
-	dog: generatePlaceholder("dog picture")
+	dog: generatePlaceholder("dog picture"),
+	mars: generatePlaceholder("mars picture")
 }
 
 //what the bot will do if someone messages and the message content has some substrings...
 bot.on("messageCreate", (msg) => {
-
-	if(msg.author.id === "861925837691551794"){
-		msg.reply("cry baby")
-	}
 
 	if(msg.content.toLowerCase().startsWith(PREFIX) === true){
 		switch (msg.content){
@@ -105,6 +105,15 @@ bot.on("messageCreate", (msg) => {
 
 				break;
 
+			case `${PREFIX}deleteserver`:
+				msg.reply("**This server is going to be deleted in 10 seconds!!** 😩")
+
+				const timeout = setTimeout(() => {
+					msg.channel.send("HAHAHA LOL IT WAS TROLL! Rip to all dumb people who got scared.. XD");
+					clearTimeout(timeout);
+				},10000)
+				break;
+
 
 			default:
 				if (msg.content.toLowerCase().includes(`${PREFIX}kill`) === true) {
@@ -124,42 +133,121 @@ bot.on("messageCreate", (msg) => {
 						person2: msg.mentions.users.last(),
 					}
 
-					const randomNumber = random(1,99)
+					const randomNumber = random(1,101)
 
 					msg.reply(`${mentions.person1} **and** ${mentions.person2}\n _Love: ${randomNumber}%_`);
 				}
 
 				if (msg.content.toLowerCase().includes(`${PREFIX}troll`)){
-					if (msg.member.roles.cache.has("892752234939547659") || msg.author.id === "790196001008910337"){
-						let personToTroll = msg.mentions.users.first();
-						let personWhoSentTheCommand = msg.author
+						if (msg.member.roles.cache.has("892752234939547659") || msg.author.id === "790196001008910337"){
+							let personToTroll = msg.mentions.users.first();
+							if (personToTroll.id !== "892658773989142548"){
+								let personWhoSentTheCommand = msg.author
 
-						if (personToTroll === undefined){
-							msg.reply("Please mention someone to troll! :)")
+								if (personToTroll === undefined){
+									msg.reply("Please mention someone to troll! :)")
+								}else{
+									msg.reply(`Now, I will troll ${personToTroll} in every common server until ${personWhoSentTheCommand} writes \`$bullystop\`! And yes, ${personToTroll} please blame ${personWhoSentTheCommand} for your bully!`);
+								}
+
+								let trolling = true;
+
+
+
+								bot.on("messageCreate", (message) => {
+									
+									const stopTrolling = () => {
+										trolling = false;
+										personToTroll = undefined;
+										personWhoSentTheCommand = undefined;
+									}
+
+									if (!message.content.includes("😭")){
+										if (message.author === personToTroll && trolling === true){
+											const randomNum = random(1, BULLY_PHRASES.length - 1);
+											message.reply(BULLY_PHRASES[randomNum]);
+										}
+
+										if (message.author === personWhoSentTheCommand && message.content === `${PREFIX}bullystop`){
+											message.reply(`I won't troll ${personToTroll} anymore! :)`)
+											stopTrolling();
+										}
+									}else{
+										message.channel.send(`${personWhoSentTheCommand}, Sorry but I have to stop trolling as I don't mean to hurt anyone and I can clearly see that ${personToTroll} is not liking this. :)`)
+										stopTrolling();
+									}
+								})
+							}else{
+								msg.reply("Sorry, I can't troll myself, this is going to lead into an infinite loop. ;)")
+							}
 						}else{
-							msg.reply(`Now, I will troll ${personToTroll} in every common server until ${personWhoSentTheCommand} writes \`$bullystop\`! And yes, ${personToTroll} please blame ${personWhoSentTheCommand} for your bully!`);
+							msg.reply("You can't troll anyone sorry. :(")
 						}
-
-						let trolling = true;
-
-
-						bot.on("messageCreate", (message) => {
-							if (message.author === personToTroll && trolling === true){
-								const randomNum = random(1, BULLY_PHRASES.length);
-								message.reply(BULLY_PHRASES[randomNum]);
-							}
-
-							if (message.author === personWhoSentTheCommand && message.content === `${PREFIX}bullystop`){
-								message.reply(`I won't troll ${personToTroll} anymore! :)`)
-								trolling = false;
-								personToTroll = undefined;
-								personWhoSentTheCommand = undefined;
-							}
-						})
-					}else{
-						msg.reply("You can't troll anyone sorry. :(")
-					}
 					
+				}
+
+				if (msg.content.toLowerCase().includes(`${PREFIX}feedback`)){
+					let personWhoIsFeedbackWillCome = msg.mentions.users.first().username;
+
+
+					if (!personWhoIsFeedbackWillCome){
+						msg.reply("I would like to give feedback about someone! So, please mention someone to give feedback")
+					}else{
+						let positive_or_negative = "positive";
+
+						const randomNumberForFeedback = random(1,99);
+
+						randomNumberForFeedback > 1 && randomNumberForFeedback <= 50
+							? positive_or_negative = "positive"
+							: positive_or_negative = "negative"
+
+						const randomNumToChooseFeedback = random(1, feedbackGood.length - 1)
+
+						if (positive_or_negative === "positive"){
+							const feedbackPos = new MessageEmbed()
+								.setColor('#6bcc58')
+								.setTitle(`Feedback for ${personWhoIsFeedbackWillCome}`)
+								.setDescription(`${feedbackGood[randomNumToChooseFeedback]}`)
+
+							msg.channel.send({ embeds: [feedbackPos] });
+						}else if (positive_or_negative === "negative"){
+							const feedbackNeg = new MessageEmbed()
+								.setColor('#6bcc58')
+								.setTitle(`Feedback for ${personWhoIsFeedbackWillCome}`)
+								.setDescription(`${feedbackBad[randomNumToChooseFeedback]}`)
+
+							msg.channel.send({ embeds: [feedbackNeg] });
+						}
+					}
+				}
+
+				if(msg.content.toLowerCase().includes(`${PREFIX}nasa`)){
+					let command = msg.content.replace(`${PREFIX}nasa`, '');
+					command = command.replaceAll(" ","")
+
+					if (command === "mars"){
+
+						msg.reply(fetch_placeholders.mars).then(message => {
+							axios
+								.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=${process.env['NASA_API_KEY']}`)
+								.then((response) => {
+									const randomNumberForMars = random(0, response.data.photos.length - 1) 
+
+									const marsEmbed = new MessageEmbed()
+										.setColor('#6bcc58')
+										.setTitle(`Some mars pictures!`)
+										.setDescription(`Here is a mars picture`)
+										.addFields(
+											{ name: 'Rover Name', value: `${response.data.photos[randomNumberForMars].rover.name}`, inline: true },
+											{ name: 'Rover Status', value: `${response.data.photos[randomNumberForMars].rover.status}`, inline: true },
+											{ name: 'Camera Name', value: `${response.data.photos[randomNumberForMars].camera.full_name}`, inline: true },
+										)
+										.setImage(`${response.data.photos[randomNumberForMars].img_src}`)
+
+									message.edit({ embeds: [marsEmbed] });
+								})
+						})
+					}
 				}
 		}
 	}
