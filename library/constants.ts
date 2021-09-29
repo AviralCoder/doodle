@@ -16,6 +16,22 @@ const COMMANDS: any[] = [
 	{
 		command: `${PREFIX}source`,
 		description: "Link to source code about the bot!"
+	},
+	{
+		command: `${PREFIX}meme`,
+		description: "Sends you a random meme!"
+	},
+	{
+		command: `${PREFIX}cat`,
+		description: "Sends you a random cat picture!"
+	},
+	{
+		command: `${PREFIX}dog`,
+		description: "Sends you a random dog picture!"
+	},
+	{
+		command: `${PREFIX}ship`,
+		description: "Ship yourself with someone else and see how much love (friendship) you have!"
 	}
 ];
 
