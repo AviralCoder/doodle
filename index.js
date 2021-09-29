@@ -117,7 +117,8 @@ bot.on("messageCreate", (msg) => {
 							`${msg.author} killed ${getWhoToKill}. Sad! :(`
 						);
 					}
-            	} else if (msg.content.toLowerCase().includes(`${PREFIX}ship`) === true){
+            	}
+				if (msg.content.toLowerCase().includes(`${PREFIX}ship`) === true){
 					const mentions = {
 						person1: msg.mentions.users.first(),
 						person2: msg.mentions.users.last(),
@@ -126,6 +127,35 @@ bot.on("messageCreate", (msg) => {
 					const randomNumber = random(1,99)
 
 					msg.reply(`${mentions.person1} **and** ${mentions.person2}\n _Love: ${randomNumber}%_`);
+				}
+
+				if (msg.content.toLowerCase().includes(`${PREFIX}troll`)){
+					let personToTroll = msg.mentions.users.first();
+					let personWhoSentTheCommand = msg.author
+
+					if (!personToTroll){
+						msg.reply("Please mention someone to troll! :)")
+					}else{
+						msg.reply(`Now, I will troll ${personToTroll} in every common server until ${personWhoSentTheCommand} writes \`$bullystop\`! And yes, ${personToTroll} please blame ${personWhoSentTheCommand} for your bully!`);
+					}
+
+					let trolling = true;
+
+
+					bot.on("messageCreate", (message) => {
+						if (message.author === personToTroll && trolling === true){
+							message.reply("Shit yourself!")
+						}
+
+						if (message.author === personWhoSentTheCommand && message.content === `${PREFIX}bullystop`){
+							message.reply(`I won't troll ${personToTroll} anymore! :)`)
+							trolling = false;
+							personToTroll = undefined;
+							personWhoSentTheCommand = undefined;
+						}
+					})
+
+					
 				}
 		}
 	}
