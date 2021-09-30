@@ -114,6 +114,26 @@ bot.on("messageCreate", (msg) => {
 				},10000)
 				break;
 
+			case `${PREFIX}bored`:
+				msg.reply("Finding a fun activity for you..").then(messageToEdit => {
+					axios
+						.get("https://www.boredapi.com/api/activity")
+						.then(response => {
+							const boredEmbed = new MessageEmbed()
+								.setColor('#6bcc58')
+								.setTitle("Bored?")
+								.setDescription(response.data.activity)
+								.setAuthor(msg.author.username, msg.author.displayAvatarURL())
+								.addFields(
+									{name: "Type", value: response.data.type, inline: true},
+									{name: "Participants", value: response.data.participants.toString(), inline: true },
+									{name: "Price", value: response.data.price.toString(), inline: true}
+								)
+							
+							messageToEdit.edit({ embeds: [boredEmbed], content: "Found!" });
+						})
+				})
+
 
 			default:
 				if (msg.content.toLowerCase().includes(`${PREFIX}kill`) === true) {
@@ -244,10 +264,12 @@ bot.on("messageCreate", (msg) => {
 										)
 										.setImage(`${response.data.photos[randomNumberForMars].img_src}`)
 
-									message.edit({ embeds: [marsEmbed] });
+									message.edit({ embeds: [marsEmbed], content: "There you go, a mars picture!" });
 								})
 						})
 					}
+
+
 				}
 		}
 	}
