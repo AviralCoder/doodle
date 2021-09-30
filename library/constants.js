@@ -61,4 +61,42 @@ var feedbackBad = [
     "Thinking is the ultimate solution to them when they are in a problem, but it fails cz when they try to think, even their brain dies because of their thoughts",
     "I deafen myself when they unmute themself to prevent getting dirty as shit comes out from their mouth."
 ];
-module.exports = { PREFIX: PREFIX, BOT_URL: BOT_URL, COMMANDS: COMMANDS, GITHUB_REPO: GITHUB_REPO, BULLY_PHRASES: BULLY_PHRASES, feedbackBad: feedbackBad, feedbackGood: feedbackGood };
+var colors = [
+    {
+        hex: "#000000",
+        commonName: "Black"
+    },
+    {
+        hex: "#ffffff",
+        commonName: "White"
+    },
+    {
+        hex: "#FF0000",
+        commonName: "Red"
+    },
+    {
+        hex: "#00FF00",
+        commonName: "Green"
+    },
+    {
+        hex: "#0000FF",
+        commonName: "Blue"
+    },
+    {
+        hex: "#FFC0CB",
+        commonName: "Pink"
+    },
+    {
+        hex: "#FFFF00",
+        commonName: "Yellow"
+    },
+    {
+        hex: "#FFA500",
+        commonName: "Orange"
+    },
+    {
+        hex: "#8F00FF",
+        commonName: "Violet"
+    }
+];
+module.exports = { PREFIX: PREFIX, BOT_URL: BOT_URL, COMMANDS: COMMANDS, GITHUB_REPO: GITHUB_REPO, BULLY_PHRASES: BULLY_PHRASES, feedbackBad: feedbackBad, feedbackGood: feedbackGood, colors: colors };

@@ -1,5 +1,3 @@
-
-
 const PREFIX:string = "$";
 const BOT_URL:string = "https://discord.com/api/oauth2/authorize?client_id=892658773989142548&permissions=536280038518&scope=bot";
 const GITHUB_REPO:string = "https://github.com/AviralCoder/doodle"
@@ -69,6 +67,44 @@ const feedbackBad:any[] = [
 	"I deafen myself when they unmute themself to prevent getting dirty as shit comes out from their mouth."
 ]
 
+const colors: any[] = [
+	{
+		hex: "#000000",
+		commonName: "Black",
+	},
+	{
+		hex: "#ffffff",
+		commonName: "White"
+	},
+	{
+		hex: "#FF0000",
+		commonName: "Red"
+	},
+	{
+		hex: "#00FF00",
+		commonName: "Green"
+	},
+	{
+		hex: "#0000FF",
+		commonName: "Blue"
+	},
+	{
+		hex: "#FFC0CB",
+		commonName: "Pink"
+	},
+	{
+		hex: "#FFFF00",
+		commonName: "Yellow"
+	},
+	{
+		hex: "#FFA500",
+		commonName: "Orange"
+	},
+	{
+		hex: "#8F00FF",
+		commonName: "Violet"
+	}
+];
 
-module.exports = { PREFIX, BOT_URL, COMMANDS, GITHUB_REPO, BULLY_PHRASES, feedbackBad, feedbackGood }
 
+module.exports = { PREFIX, BOT_URL, COMMANDS, GITHUB_REPO, BULLY_PHRASES, feedbackBad, feedbackGood, colors };
