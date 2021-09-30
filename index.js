@@ -8,11 +8,17 @@ const axios = require("axios");
 //message embed
 const { MessageEmbed } = require("discord.js")
 
+//file system
+const fs = require("fs");
+
 //imports
 const { PREFIX, BOT_URL, GITHUB_REPO, BULLY_PHRASES, feedbackGood, feedbackBad } = require("./library/constants")
 
 //function to keep the server alive when the repl.it tab closed
 const { keepServerAlive } = require("./server");
+
+//function to generate random dates
+const { randomDate } = require("./functions/randomDate");
 
 //function to generate placeholders
 const { generatePlaceholder } = require("./functions/generatePlaceholder");
@@ -39,7 +45,18 @@ const fetch_placeholders = {
 //what the bot will do if someone messages and the message content has some substrings...
 bot.on("messageCreate", (msg) => {
 
+	if(msg.content.toLowerCase().includes("love you")){
+		msg.reply("Do your romance in personal dumbo!");
+	}
+
+	if(msg.content.toLowerCase().includes("devina gf")){
+		msg.reply("Do your romance in personal dumbo!");
+	}
+
+	if(msg.content.tO)
+
 	if(msg.content.toLowerCase().startsWith(PREFIX) === true){
+
 		switch (msg.content){
 			//if someone types info after prefix, what to reply.. - 
 			case `${PREFIX}info`:
@@ -106,12 +123,11 @@ bot.on("messageCreate", (msg) => {
 				break;
 
 			case `${PREFIX}deleteserver`:
-				msg.reply("**This server is going to be deleted in 10 seconds!!** 😩")
-
-				const timeout = setTimeout(() => {
-					msg.channel.send("HAHAHA LOL IT WAS TROLL! Rip to all dumb people who got scared.. XD");
-					clearTimeout(timeout);
-				},10000)
+				msg.channel.send("**This server is going to be deleted in 10 seconds!!** 😩")
+				
+				setTimeout(() => {
+					msg.delete();
+				},10)
 				break;
 
 			case `${PREFIX}bored`:
@@ -133,6 +149,26 @@ bot.on("messageCreate", (msg) => {
 							messageToEdit.edit({ embeds: [boredEmbed], content: "Found!" });
 						})
 				})
+
+				break;
+
+			case `${PREFIX}deathday`:
+				const presentDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+
+				const randomNumForData = random(40,81)
+
+				const endDate = new Date(new Date().getFullYear() + randomNumForData, new Date().getMonth(), new Date().getDate());
+
+				const deathDay = randomDate(presentDate, endDate).replaceAll("GMT+0000 (Coordinated Universal Time)", "")
+
+				const deathDayEmbed = new MessageEmbed()
+					.setColor('#6bcc58')
+					.setTitle(`Death Day for ${msg.author.username}`)
+					.setDescription(`They will die on ${deathDay}`)
+				
+				msg.reply({ embeds: [deathDayEmbed] })
+
+				break;
 
 
 			default:
@@ -159,7 +195,7 @@ bot.on("messageCreate", (msg) => {
 				}
 
 				if (msg.content.toLowerCase().includes(`${PREFIX}troll`)){
-						if (msg.member.roles.cache.has("892752234939547659") || msg.author.id === "790196001008910337"){
+						if (msg.member.roles.cache.find((role)=> role.name === "TROLLER") || msg.author.id === "790196001008910337"){
 							let personToTroll = msg.mentions.users.first();
 							if (personToTroll.id !== "892658773989142548"){
 								let personWhoSentTheCommand = msg.author
