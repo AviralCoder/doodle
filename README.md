@@ -52,7 +52,7 @@ Not all permissions mentioned have been used. For proof, please check the source
 - `<PREFIX>help` - Currently in development.
 
 ## Contributing
-**This bot is no longer being developed and the project has ended. So, I wouldn't resolve any issues. I may merge some pull request that doesn't need testing of the bot but the pull requests which need testing of the bot, won't be merged. There might be exceptions when I get time to test the bot and the PR has been merged. **
+**This bot is no longer being developed and the project has ended. So, I wouldn't resolve any issues. I may merge some pull request that doesn't need testing of the bot but the pull requests which need testing of the bot, won't be merged. There might be exceptions when I get time to test the bot and the PR has been merged.**
 
 
 ## License
