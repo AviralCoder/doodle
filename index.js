@@ -42,14 +42,6 @@ const fetch_placeholders = {
 //what the bot will do if someone messages and the message content has some substrings...
 bot.on("messageCreate", (msg) => {
 
-	if(msg.content.toLowerCase().includes("love you")){
-		msg.reply("Do your romance in personal dumbo!");
-	}
-
-	if(msg.content.toLowerCase().includes("devina gf")){
-		msg.reply("Do your romance in personal dumbo!");
-	}
-
 
 	if(msg.content.toLowerCase().startsWith(PREFIX) === true){
 
