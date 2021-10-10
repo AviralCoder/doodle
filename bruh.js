@@ -1,47 +1,4 @@
-//discord bot init
-const Discord = require("discord.js");
-const bot = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
-
-//axios
-const axios = require("axios");
-
-//message embed
-const { MessageEmbed } = require("discord.js")
-
-//imports
-const { PREFIX, BOT_URL, GITHUB_REPO, BULLY_PHRASES, feedbackGood, feedbackBad, colors } = require("./library/constants")
-
-//function to keep the server alive when the repl.it tab closed
-const { keepServerAlive } = require("./server");
-
-//function to generate random dates
-const { randomDate } = require("./functions/randomDate");
-
-//function to generate placeholders
-const { generatePlaceholder } = require("./functions/generatePlaceholder");
-
-//random function
-const { random } = require("./functions/random")
-
-//function to run when bot is ready
-bot.on("ready", () => {
-	console.log(`Logged in as ${bot.user.tag}`);
-})
-
-//the placeholders that will come while fetching the data using axios
-const fetch_placeholders = {
-	meme: generatePlaceholder("meme"),
-	cat: generatePlaceholder("cat picture"),
-	dog: generatePlaceholder("dog picture"),
-	mars: generatePlaceholder("mars picture")
-}
-
-//what the bot will do if someone messages and the message content has some substrings...
-bot.on("messageCreate", (msg) => {
-
-
-
-	if(msg.content.toLowerCase().startsWith(PREFIX) === true){
+if(msg.content.toLowerCase().startsWith(PREFIX) === true){
 
 		switch (msg.content){
 			//if someone types info after prefix, what to reply.. - 
@@ -232,40 +189,6 @@ bot.on("messageCreate", (msg) => {
 				break;
 
 			default:
-				if (msg.content.toLowerCase().includes(`${PREFIX}poll`)){
-					try {
-						const commandRemovedText = msg.content.replace(`${PREFIX}poll`, "");
-						const options = commandRemovedText.split(",");
-
-
-						const question = options[0];
-						const option_A = options[1];
-						const option_B = options[2];
-						const option_C = options[3];
-						const option_D = options[4];
-
-							
-						const pollEmbed = new MessageEmbed()
-								.setColor("#6bcc58")
-								.setTitle(`:bar_chart: ${question}`)
-								.setDescription(`:one: ${option_A}\n :two: ${option_B}\n :three: ${option_C}\n :four: ${option_D}`)
-						msg.reply({ embeds: [pollEmbed] }).then(message => {
-							Promise.all(
-							[message.react("1️⃣"),
-							message.react("2️⃣"),
-							message.react("3️⃣"),
-							message.react("4️⃣")])
-						}).catch(e => {
-							message.edit({ content: `There was an error - ${e}` })
-						})
-
-						
-					} catch (e){
-						msg.reply(e);
-					}
-				}
-
-
 				if (msg.content.toLowerCase().includes(`${PREFIX}kill`) === true) {
 					try {
 						const getWhoToKill = msg.content.replace(`${PREFIX}kill`, "");
@@ -422,8 +345,3 @@ bot.on("messageCreate", (msg) => {
 				}
 		}
 	}
-})
-
-
-keepServerAlive();
-bot.login(process.env['TOKEN'])
