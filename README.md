@@ -50,6 +50,7 @@ Not all permissions mentioned have been used. For proof, please check the source
 - `<PREFIX>feedback` - This command takes on parmater which is the user about whome feedback is to be given. The feedback of the user mentioned in the parameter can either be negative or positive. 
 - `<PREFIX>nasa mars` - I used the NASA Rest API to get Mars images by rovers and reply to the user in the form of embeds.
 - `<PREFIX>help` - Currently in development.
+- `<PREFIX>poll` - Runs a poll, takes 5 params, 1 for question and the others for options. Params separated by commas.
 
 ## Contributing
 You are most welcome to submit a PR or an issue :)
